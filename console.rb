@@ -3,6 +3,10 @@ require_relative('models/customer')
 require_relative('models/film')
 require_relative('models/ticket')
 
+Ticket.delete_all()
+Film.delete_all()
+Customer.delete_all()
+
 customer1 = Customer.new({ 'name' => 'Laura', 'funds' => 100})
 customer1.save()
 customer2 = Customer.new({'name' => 'Hazel', 'funds' => 50})
@@ -46,6 +50,28 @@ ticket9.save()
 ticket10 = Ticket.new({'customer_id' => customer5.id, 'film_id' => film5.id})
 ticket10.save()
 
+# Update
+
+# customer3.funds = 40
+# customer3.update()
+#
+# film4.title = '9 to 5'
+# film4.update()
+#
+# ticket4.customer_id = customer2.id
+# ticket4.update()
+
+# Delete
+
+# customer3.delete()
+#
+# film4.delete()
+#
+# ticket4.delete()
+
+all_customers = Customer.all()
+all_films = Film.all()
+all_tickets = Ticket.all()
 
 binding.pry
 nil
