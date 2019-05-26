@@ -30,11 +30,13 @@ class Film
     SqlRunner.run(sql, values)
   end
 
+#Show which customers are coming to see one film ordered by customer name
   def customers()
-    sql = "SELECT customers.name FROM customers
+    sql = "SELECT customers.* FROM customers
     INNER JOIN tickets
     ON tickets.customer_id = customers.id
-    WHERE film_id = $1"
+    WHERE film_id = $1
+    ORDER BY name ASC"
     values = [@id]
     customers = SqlRunner.run(sql, values)
     result = customers.map {|customer| Customer.new(customer)}
