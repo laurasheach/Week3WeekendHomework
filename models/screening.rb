@@ -1,4 +1,5 @@
 require_relative('../db/sql_runner')
+require_relative('film')
 
 class Screening
 
@@ -28,6 +29,17 @@ class Screening
     sql = "DELETE FROM screenings WHERE id = $1"
     values = [@id]
     SqlRunner.run(sql, values)
+  end
+
+#Attempt at finding out most popular film
+  def self.most_popular_film()
+      sql = "SELECT screenings.* FROM screenings
+      INNER JOIN tickets
+      ON screenings.id = tickets.screening_id;"
+      screenings_by_ticket = SqlRunner.run(sql)
+      all_screenings = screenings_by_ticket.map{|screening| Screening.new(screening)}
+      result = all_screenings.sort_by {|x| x <=> @show_time}
+      return result[0]
   end
 
   def self.all()

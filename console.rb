@@ -147,7 +147,7 @@ all_films = Film.all()
 all_screenings = Screening.all()
 all_tickets = Ticket.all()
 
-
+popular_film = Screening.most_popular_film()
 
 binding.pry
 nil
