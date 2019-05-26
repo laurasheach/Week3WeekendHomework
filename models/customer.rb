@@ -43,6 +43,13 @@ class Customer
     return result
   end
 
+  def remaining_funds()
+    buy_ticket = self.films
+    ticket_prices = buy_ticket.map {|film| film.price}
+    ticket_total = ticket_prices.sum
+    return @funds - ticket_total
+  end
+
   def self.all()
     sql = "SELECT * FROM customers"
     values = []
