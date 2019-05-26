@@ -43,6 +43,7 @@ class Film
     return result
   end
 
+#Number of customers by film 
   def customer_numbers()
     customers = self.customers
     total_customers = customers.count
@@ -53,15 +54,16 @@ class Film
   def show_times()
     sql = "SELECT films.title, screenings.show_time FROM films
     INNER JOIN screenings
-    ON films.id = screenings.film_id
-    WHERE film_id = $1"
+    ON films.id = screenings.film_title_id
+    WHERE films.id = $1"
     values = [@id]
     show_times = SqlRunner.run(sql, values)
     result = show_times.map {|show_time| Screening.new(show_time)}
     return result
   end
 
-  def tickets_by_film
+#Tickets bought by a customer
+  def tickets_by_film()
     sql = "SELECT screenings.* FROM screenings
     INNER JOIN tickets
     ON screenings.id = tickets.screening_id
@@ -70,6 +72,22 @@ class Film
     tickets_by_film = SqlRunner.run(sql, values)
     result = tickets_by_film.map {|film| Film.new(film)}
     return result.count
+  end
+
+#Attempt at setting a limit of available tickets for screenings
+  def max_tickets()
+    sql = "SELECT screenings.* FROM screenings
+    INNER JOIN tickets
+    ON screenings.id = tickets.screening_id
+    WHERE film_title_id = $1"
+    values = [@id]
+    tickets_by_film = SqlRunner.run(sql, values)
+    result = tickets_by_film.map {|film| Film.new(film)}
+    if result.count >= 3
+      "Sorry, cinema full"
+    else
+      "Welcome!"
+    end
   end
 
   def self.all()

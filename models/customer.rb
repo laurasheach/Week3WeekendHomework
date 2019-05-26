@@ -43,6 +43,7 @@ class Customer
     return result
   end
 
+#Reduce customer funds when tickets bought
   def remaining_funds()
     buy_ticket = self.films
     ticket_prices = buy_ticket.map {|film| film.price}
@@ -50,6 +51,7 @@ class Customer
     return @funds - ticket_total
   end
 
+#Tickets sold by customer
   def tickets_purchased()
     tickets = self.films
     total_tickets = tickets.count
