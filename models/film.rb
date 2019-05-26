@@ -49,6 +49,29 @@ class Film
     return total_customers
   end
 
+#Show the all the show times for a film
+  def show_times()
+    sql = "SELECT films.title, screenings.show_time FROM films
+    INNER JOIN screenings
+    ON films.id = screenings.film_id
+    WHERE film_id = $1"
+    values = [@id]
+    show_times = SqlRunner.run(sql, values)
+    result = show_times.map {|show_time| Screening.new(show_time)}
+    return result
+  end
+
+  def tickets_by_film
+    sql = "SELECT screenings.* FROM screenings
+    INNER JOIN tickets
+    ON screenings.id = tickets.screening_id
+    WHERE film_title_id = $1"
+    values = [@id]
+    tickets_by_film = SqlRunner.run(sql, values)
+    result = tickets_by_film.map {|film| Film.new(film)}
+    return result.count
+  end
+
   def self.all()
     sql = "SELECT * FROM films"
     values = []
