@@ -50,6 +50,12 @@ class Customer
     return @funds - ticket_total
   end
 
+  def tickets_purchased()
+    tickets = self.films
+    total_tickets = tickets.count
+    return total_tickets
+  end
+
   def self.all()
     sql = "SELECT * FROM customers"
     values = []

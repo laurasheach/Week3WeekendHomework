@@ -43,6 +43,12 @@ class Film
     return result
   end
 
+  def customer_numbers()
+    customers = self.customers
+    total_customers = customers.count
+    return total_customers
+  end
+
   def self.all()
     sql = "SELECT * FROM films"
     values = []
